@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "milestones": {
+          "$milestoneId": {
+            ".validate": "newData.hasChildren(['title', 'timestampMillis', 'mode', 'createdAt'])",
+            "title": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 60"
+            },
+            "timestampMillis": {
+              ".validate": "newData.isNumber() && newData.val() > 0"
+            },
+            "mode": {
+              ".validate": "newData.val() === 'since' || newData.val() === 'until'"
+            },
+            "createdAt": {
+              ".validate": "newData.isNumber() && newData.val() > 0"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

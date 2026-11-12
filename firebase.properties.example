@@ -1,0 +1,7 @@
+# Copy this file to firebase.properties and fill in values from Firebase Console.
+FIREBASE_API_KEY=your-api-key
+FIREBASE_APP_ID=your-firebase-app-id
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_DATABASE_URL=https://your-project-default-rtdb.region.firebasedatabase.app
+FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+FIREBASE_SENDER_ID=your-messaging-sender-id

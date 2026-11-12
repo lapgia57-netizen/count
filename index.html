@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Đếm chính xác thời gian đã trôi qua kể từ 19 giờ ngày 3 tháng 11 năm 2026."
+    />
+    <title>Đếm ngày đêm — Từ 03.11.2026</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: #080b14;
+        color: #f5f6fb;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        padding: 28px 20px;
+        background:
+          radial-gradient(ellipse at 50% 0%, #27204a 0%, transparent 42%),
+          radial-gradient(ellipse at 90% 100%, #102c3c 0%, transparent 38%),
+          #080b14;
+      }
+
+      .page {
+        width: min(100%, 760px);
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin: 0 0 22px;
+        color: #a9a7c2;
+        font-size: 0.75rem;
+        font-weight: 650;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before,
+      .eyebrow::after {
+        width: 28px;
+        height: 1px;
+        background: #595477;
+        content: "";
+      }
+
+      .card {
+        position: relative;
+        overflow: hidden;
+        padding: clamp(32px, 7vw, 64px);
+        border: 1px solid rgb(255 255 255 / 10%);
+        border-radius: 28px;
+        background: linear-gradient(145deg, rgb(24 26 44 / 94%), rgb(13 18 30 / 96%));
+        box-shadow:
+          0 30px 100px rgb(0 0 0 / 45%),
+          inset 0 1px 0 rgb(255 255 255 / 6%);
+        text-align: center;
+      }
+
+      .card::before {
+        position: absolute;
+        top: -150px;
+        left: 50%;
+        width: 360px;
+        height: 260px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: #8d68ff;
+        content: "";
+        filter: blur(115px);
+        opacity: 0.19;
+        pointer-events: none;
+      }
+
+      .content {
+        position: relative;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.7rem, 5vw, 2.5rem);
+        font-weight: 600;
+        letter-spacing: -0.045em;
+      }
+
+      .subtitle {
+        margin: 12px 0 38px;
+        color: #a7a9ba;
+        font-size: clamp(0.9rem, 2.4vw, 1.05rem);
+      }
+
+      .period-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin: 0 auto;
+      }
+
+      .period-card {
+        padding: 22px 14px 18px;
+        border: 1px solid rgb(255 255 255 / 9%);
+        border-radius: 18px;
+        background: rgb(255 255 255 / 3%);
+      }
+
+      .period-name {
+        margin: 0;
+        color: #aaaabd;
+        font-size: 0.82rem;
+      }
+
+      .period-count {
+        display: block;
+        margin: 10px 0 4px;
+        color: #d7ceff;
+        font-size: clamp(2.5rem, 9vw, 4.2rem);
+        font-weight: 700;
+        letter-spacing: -0.08em;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .period-unit {
+        color: #f3f1fb;
+        font-size: 0.95rem;
+      }
+
+      .period-remainder {
+        margin: 12px 0 0;
+        color: #a7a9ba;
+        font-size: 0.78rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .period-hours {
+        color: #c9c4df;
+        font-weight: 600;
+      }
+
+      .period-range {
+        margin: 5px 0 0;
+        color: #777d91;
+        font-size: 0.72rem;
+      }
+
+      .since {
+        margin: 30px 0 0;
+        color: #aaaabd;
+        font-size: 0.88rem;
+      }
+
+      .since strong {
+        color: #e4ddff;
+        font-weight: 550;
+      }
+
+      .vietnam-time {
+        margin: 10px 0 0;
+        color: #898da1;
+        font-size: 0.8rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .vietnam-time strong {
+        color: #c9c4df;
+        font-weight: 550;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 28px;
+        color: #a1a4b7;
+        font-size: 0.75rem;
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #a98dff;
+        box-shadow: 0 0 12px #a98dff;
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          border-radius: 22px;
+        }
+
+        .subtitle {
+          margin-bottom: 32px;
+        }
+
+        .period-grid {
+          gap: 9px;
+        }
+
+        .period-card {
+          padding: 18px 8px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <p class="eyebrow">Khoảnh khắc bắt đầu</p>
+      <section class="card" aria-labelledby="title">
+        <div class="content">
+          <h1 id="title">Đã bao lâu rồi?</h1>
+          <p class="subtitle">Thời gian ban ngày và ban đêm được tính riêng</p>
+
+          <div class="period-grid" aria-label="Thời gian đã qua theo từng khung">
+            <section class="period-card" aria-label="Thời gian ban ngày">
+              <p class="period-name">Ban ngày</p>
+              <span class="period-count" id="dayCount">0</span>
+              <span class="period-unit">ngày</span>
+              <p class="period-remainder">
+                + <span class="period-hours" id="dayRemainder">00:00:00</span>
+              </p>
+              <p class="period-range">06:00 – 18:00</p>
+            </section>
+            <section class="period-card" aria-label="Thời gian ban đêm">
+              <p class="period-name">Ban đêm</p>
+              <span class="period-count" id="nightCount">0</span>
+              <span class="period-unit">đêm</span>
+              <p class="period-remainder">
+                + <span class="period-hours" id="nightRemainder">00:00:00</span>
+              </p>
+              <p class="period-range">18:00 – 06:00</p>
+            </section>
+          </div>
+
+          <p class="since">
+            Tính từ <strong>19:00 · 03 tháng 11, 2026</strong>
+          </p>
+          <p class="vietnam-time">
+            Giờ Việt Nam hiện tại:
+            <strong id="vietnamTime">--:--:--</strong> (UTC+7)
+          </p>
+          <p class="period-range">
+            Ban ngày 06:00–18:00 · Ban đêm 18:00–06:00 (giờ Việt Nam)
+          </p>
+          <div class="status">
+            <span class="status-dot" aria-hidden="true"></span>
+            Đang cập nhật theo thời gian thực
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const startTime = new Date("2026-11-03T19:00:00+07:00").getTime();
+      const hour = 60 * 60 * 1000;
+      const dayLength = 24 * hour;
+      const periodLength = 12 * hour;
+      const vietnamOffset = 7 * hour;
+      const vietnamClock = new Intl.DateTimeFormat("vi-VN", {
+        timeZone: "Asia/Ho_Chi_Minh",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23",
+      });
+
+      const elements = {
+        dayCount: document.getElementById("dayCount"),
+        nightCount: document.getElementById("nightCount"),
+        dayRemainder: document.getElementById("dayRemainder"),
+        nightRemainder: document.getElementById("nightRemainder"),
+        vietnamTime: document.getElementById("vietnamTime"),
+      };
+
+      function formatDuration(milliseconds) {
+        const totalSeconds = Math.floor(milliseconds / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        return [hours, minutes, seconds]
+          .map((value) => String(value).padStart(2, "0"))
+          .join(":");
+      }
+
+      function updateElapsedTime() {
+        const now = Date.now();
+        let cursor = startTime;
+        let daylightElapsed = 0;
+        let nighttimeElapsed = 0;
+
+        while (cursor < now) {
+          const vietnamDayStart =
+            Math.floor((cursor + vietnamOffset) / dayLength) * dayLength - vietnamOffset;
+          const vietnamTimeOfDay = cursor - vietnamDayStart;
+          const isDaylight = vietnamTimeOfDay >= 6 * hour && vietnamTimeOfDay < 18 * hour;
+          const nextBoundary = isDaylight
+            ? vietnamDayStart + 18 * hour
+            : vietnamTimeOfDay < 6 * hour
+              ? vietnamDayStart + 6 * hour
+              : vietnamDayStart + dayLength + 6 * hour;
+          const segmentEnd = Math.min(now, nextBoundary);
+          const segmentDuration = segmentEnd - cursor;
+
+          if (isDaylight) {
+            daylightElapsed += segmentDuration;
+          } else {
+            nighttimeElapsed += segmentDuration;
+          }
+
+          cursor = segmentEnd;
+        }
+
+        elements.dayCount.textContent = Math.floor(daylightElapsed / periodLength).toLocaleString("vi-VN");
+        elements.nightCount.textContent = Math.floor(nighttimeElapsed / periodLength).toLocaleString("vi-VN");
+        elements.dayRemainder.textContent = formatDuration(daylightElapsed % periodLength);
+        elements.nightRemainder.textContent = formatDuration(nighttimeElapsed % periodLength);
+        elements.vietnamTime.textContent = vietnamClock.format(now);
+      }
+
+      updateElapsedTime();
+      window.setInterval(updateElapsedTime, 1000);
+    </script>
+  </body>
+</html>
