@@ -22,11 +22,18 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.9
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Check or Generate Gradle Wrapper
+        run: |
+          if [ ! -f "./gradlew" ]; then
+            echo "Gradle wrapper not found. Generating wrapper..."
+            gradle wrapper --gradle-version 8.9
+          fi
+          chmod +x gradlew
 
-      - name: Build debug APK with Gradle Wrapper
+      - name: Build debug APK
         run: ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
