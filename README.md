@@ -1,13 +1,13 @@
 # Đếm ngày đêm — Android
 
-Ứng dụng Kotlin + Jetpack Compose để lưu và theo dõi các mốc thời gian. Hỗ trợ đếm từ một thời điểm hoặc đếm ngược đến một thời điểm, đăng nhập email/mật khẩu, đồng bộ dữ liệu theo tài khoản bằng Firebase Realtime Database, và phân tích riêng thời lượng ban ngày (06:00–18:00) / ban đêm (18:00–06:00) cho bộ đếm xuôi.
+Ứng dụng Kotlin + Jetpack Compose để lưu và theo dõi các mốc thời gian. Hỗ trợ đếm từ một thời điểm hoặc đếm ngược đến một thời điểm, đăng nhập email/mật khẩu (không hỗ trợ đăng ký trong ứng dụng), đồng bộ dữ liệu theo tài khoản bằng Firebase Realtime Database, và phân tích riêng thời lượng ban ngày (06:00–18:00) / ban đêm (18:00–06:00) cho bộ đếm xuôi.
 
 ## Mở và chạy
 
 - Mở thư mục này bằng Android Studio.
 - Dùng JDK 17 và Android SDK Platform 35.
 - Chạy cấu hình `app` trên thiết bị hoặc emulator Android 8.0 (API 26) trở lên.
-- Bật **Email/Password** trong Firebase Authentication và tạo Realtime Database.
+- Bật **Email/Password** trong Firebase Authentication, tạo tài khoản người dùng trong Firebase Console và tạo Realtime Database. Người dùng đăng nhập bằng tài khoản đã tạo sẵn.
 - Sao chép `firebase.properties.example` thành `firebase.properties`, sau đó điền `apiKey`, `appId`, `projectId`, `databaseURL`, `storageBucket` và `messagingSenderId` từ Firebase config. `firebase.properties` đã được bỏ qua khỏi Git.
 - Áp dụng [database.rules.json](./database.rules.json) trong tab Rules của Realtime Database. Mỗi tài khoản chỉ đọc/ghi được `/users/{uid}` của chính mình.
 

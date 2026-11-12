@@ -37,7 +37,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -187,7 +186,6 @@ private fun AuthenticatedApp(auth: FirebaseAuth, database: FirebaseDatabase) {
 
 @Composable
 private fun AuthScreen(auth: FirebaseAuth) {
-    var createAccount by remember { mutableStateOf(false) }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
@@ -207,7 +205,7 @@ private fun AuthScreen(auth: FirebaseAuth) {
             AppMark()
             Spacer(Modifier.height(20.dp))
             Text(
-                text = if (createAccount) "Tạo tài khoản" else "Chào mừng trở lại",
+                text = "Đăng nhập",
                 color = Color(0xFFF5F6FB),
                 fontSize = 27.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -245,22 +243,18 @@ private fun AuthScreen(auth: FirebaseAuth) {
             Spacer(Modifier.height(18.dp))
             Button(
                 onClick = {
-                    if (email.isBlank() || password.length < 6) {
-                        errorMessage = "Nhập email hợp lệ và mật khẩu có ít nhất 6 ký tự."
+                    if (email.isBlank() || password.isBlank()) {
+                        errorMessage = "Nhập email và mật khẩu."
                     } else {
                         busy = true
                         errorMessage = null
-                        val task = if (createAccount) {
-                            auth.createUserWithEmailAndPassword(email.trim(), password)
-                        } else {
-                            auth.signInWithEmailAndPassword(email.trim(), password)
-                        }
-                        task.addOnCompleteListener { result ->
-                            busy = false
-                            if (!result.isSuccessful) {
-                                errorMessage = authError(result.exception)
+                        auth.signInWithEmailAndPassword(email.trim(), password)
+                            .addOnCompleteListener { result ->
+                                busy = false
+                                if (!result.isSuccessful) {
+                                    errorMessage = authError(result.exception)
+                                }
                             }
-                        }
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -269,11 +263,8 @@ private fun AuthScreen(auth: FirebaseAuth) {
                 if (busy) {
                     CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                 } else {
-                    Text(if (createAccount) "Đăng ký" else "Đăng nhập")
+                    Text("Đăng nhập")
                 }
-            }
-            TextButton(onClick = { createAccount = !createAccount; errorMessage = null }) {
-                Text(if (createAccount) "Đã có tài khoản? Đăng nhập" else "Chưa có tài khoản? Đăng ký")
             }
         }
     }
@@ -884,8 +875,6 @@ private fun authError(exception: Exception?): String {
         "ERROR_INVALID_EMAIL" -> "Địa chỉ email không hợp lệ."
         "ERROR_WRONG_PASSWORD", "ERROR_INVALID_CREDENTIAL" -> "Email hoặc mật khẩu không chính xác."
         "ERROR_USER_NOT_FOUND" -> "Không tìm thấy tài khoản này."
-        "ERROR_EMAIL_ALREADY_IN_USE" -> "Email này đã được đăng ký."
-        "ERROR_WEAK_PASSWORD" -> "Mật khẩu chưa đủ mạnh (tối thiểu 6 ký tự)."
         "ERROR_NETWORK_REQUEST_FAILED" -> "Không thể kết nối mạng. Kiểm tra kết nối rồi thử lại."
         else -> exception?.localizedMessage ?: "Không thể xác thực. Vui lòng thử lại."
     }
