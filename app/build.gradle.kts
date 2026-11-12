@@ -13,11 +13,22 @@ val firebaseProperties = Properties().apply {
     rootProject.file("firebase.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
 }
 
+val firebaseDefaults = mapOf(
+    "FIREBASE_API_KEY" to "AIzaSyBkPBVY1n7g114fDY5hx3AdUP7zxfoG1LY",
+    "FIREBASE_APP_ID" to "1:1024458948115:web:0f467853026277ec8689e6",
+    "FIREBASE_PROJECT_ID" to "dumuctime",
+    "FIREBASE_DATABASE_URL" to "https://dumuctime-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "FIREBASE_STORAGE_BUCKET" to "dumuctime.firebasestorage.app",
+    "FIREBASE_SENDER_ID" to "1024458948115",
+)
+
 fun firebaseValue(name: String): String =
     providers.gradleProperty(name)
         .orElse(providers.environmentVariable(name))
-        .orElse(firebaseProperties.getProperty(name, ""))
         .getOrElse("")
+        .takeIf(String::isNotBlank)
+        ?: firebaseProperties.getProperty(name)?.takeIf(String::isNotBlank)
+        ?: firebaseDefaults.getValue(name)
 
 android {
     namespace = "com.example.venha"

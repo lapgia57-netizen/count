@@ -1,4 +1,4 @@
-# Copy this file to firebase.properties and fill in values from Firebase Console.
+# Optional: copy to firebase.properties to override the Firebase defaults in app/build.gradle.kts.
 FIREBASE_API_KEY=your-api-key
 FIREBASE_APP_ID=your-firebase-app-id
 FIREBASE_PROJECT_ID=your-project-id

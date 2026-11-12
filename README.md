@@ -8,7 +8,7 @@
 - Dùng JDK 17 và Android SDK Platform 35.
 - Chạy cấu hình `app` trên thiết bị hoặc emulator Android 8.0 (API 26) trở lên.
 - Bật **Email/Password** trong Firebase Authentication, tạo tài khoản người dùng trong Firebase Console và tạo Realtime Database. Người dùng đăng nhập bằng tài khoản đã tạo sẵn.
-- Sao chép `firebase.properties.example` thành `firebase.properties`, sau đó điền `apiKey`, `appId`, `projectId`, `databaseURL`, `storageBucket` và `messagingSenderId` từ Firebase config. `firebase.properties` đã được bỏ qua khỏi Git.
+- Cấu hình Firebase của dự án đã được khai báo mặc định trong `app/build.gradle.kts`, nên có thể mở app và build trực tiếp mà không cần tạo file cấu hình hay GitHub Secrets. Nếu cần dùng cấu hình khác, có thể ghi đè bằng `firebase.properties` (mẫu ở `firebase.properties.example`), Gradle properties hoặc biến môi trường.
 - Áp dụng [database.rules.json](./database.rules.json) trong tab Rules của Realtime Database. Mỗi tài khoản chỉ đọc/ghi được `/users/{uid}` của chính mình.
 
 `authDomain` không được dùng bởi Firebase Android SDK.
@@ -17,4 +17,4 @@
 
 Workflow `.github/workflows/android.yml` build APK debug khi push lên nhánh `main`/`master`, mở pull request hoặc chạy thủ công từ GitHub Actions. Tải `app-debug.apk` trong mục Artifacts của lần chạy workflow. APK debug phù hợp để cài thử; phát hành lên Google Play cần cấu hình ký APK/AAB riêng.
 
-Để APK từ GitHub Actions kết nối Firebase, thêm các GitHub Actions repository secrets: `FIREBASE_API_KEY`, `FIREBASE_APP_ID`, `FIREBASE_PROJECT_ID`, `FIREBASE_DATABASE_URL`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_SENDER_ID`.
+Workflow build APK dùng cấu hình Firebase mặc định trong mã nguồn và không yêu cầu GitHub Actions secrets. Firebase client config được đóng gói trong APK; bảo vệ dữ liệu bằng Realtime Database Rules, không dựa vào việc giấu API key.
